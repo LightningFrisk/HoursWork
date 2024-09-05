@@ -1,7 +1,10 @@
 package com.labs1904;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class SecretRecipeDecoder {
     private static Map<String, String> ENCODING = new HashMap<String, String>() {
@@ -83,18 +86,41 @@ public class SecretRecipeDecoder {
      */
     public static Ingredient decodeIngredient(String line) {
         // TODO: implement reading from text line maybe? need to look at table because data has #'s in it, but focus on getting basic functionality first then iron this out
-        Ingredient x = new Ingredient("8 vgl", "hgiikf"); //use for test
+        String[] splitLine = line.split("#");
 
-        String y = decodeString(x.getAmount());
-        String z = decodeString(x.getDescription());
+        //Ingredient x = new Ingredient("8 vgl", "hgiikf"); //use for test
+         //use for test
 
-        return new Ingredient(y, z);
+        String y = decodeString(splitLine[0]);
+        String z = decodeString(splitLine[1]);
+
+//        System.out.println(y);
+//        System.out.println(z);
+
+        return new Ingredient(y,z);
     }
 
     public static void main(String[] args) {
         // TODO: implement me
         //Ingredient secretrecipe = new Ingredient("8 vgl", "#hgiikf");  //use this for testing, need to implement reading this from file
-        System.out.println(decodeString("8 vgl"));
+        //System.out.println(decodeString("8 vgl"));
+        try {
+            Scanner scanner = new Scanner(new File("C:\\Users\\bmxca\\GitHub\\HoursWork\\src\\main\\resources\\secret_recipe.txt")); //hardcoding this path is probably not good
+            String line;
+            String decodedAmount;
+            String decodedIngredient;
+
+            System.out.println("--- Ingredient List ---");
+            while (scanner.hasNextLine()) {
+                line = scanner.nextLine();
+                decodedAmount = decodeIngredient(line).getAmount();
+                decodedIngredient = decodeIngredient(line).getDescription();
+                System.out.println(decodedAmount + " of " + decodedIngredient);
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 }
