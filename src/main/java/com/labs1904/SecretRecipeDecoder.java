@@ -55,22 +55,24 @@ public class SecretRecipeDecoder {
      */
     public static String decodeString(String str) {
         String encodedString = str; //changing for readability
-        StringBuilder decodedString = new StringBuilder();
+        StringBuilder decodedString = new StringBuilder(str.length()+1);
 
         for (int i = 0; i < encodedString.length(); i++) {
             //loop thru string, then swap for correct letter.
             String encodedLetter = String.valueOf(encodedString.charAt(i)); //loops thru the letters in string
-            String decodedLetter = "";
+            String decodedLetter;
 
             if(ENCODING.containsKey(encodedLetter)){ //behavior should just pass letter along if its not in cypher
-                decodedLetter = ENCODING.get(i);
+                decodedLetter = ENCODING.get(encodedLetter);
+                //System.out.println("if: " + decodedLetter);
             } else {
                 decodedLetter = encodedLetter;
+                //System.out.println("else: " + decodedLetter);
             }
             decodedString.append(decodedLetter);
         }
 
-        System.out.println(decodedString.toString());
+        //System.out.println(decodedString);
         return decodedString.toString();
     }
 
@@ -91,7 +93,7 @@ public class SecretRecipeDecoder {
 
     public static void main(String[] args) {
         // TODO: implement me
-        Ingredient secretrecipe = new Ingredient("8 vgl", "#hgiikf");  //use this for testing, need to implement reading this from file
+        //Ingredient secretrecipe = new Ingredient("8 vgl", "#hgiikf");  //use this for testing, need to implement reading this from file
         System.out.println(decodeString("8 vgl"));
 
     }
