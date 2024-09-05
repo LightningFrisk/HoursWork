@@ -2,6 +2,11 @@ package com.labs1904;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -109,14 +114,28 @@ public class SecretRecipeDecoder {
             String line;
             String decodedAmount;
             String decodedIngredient;
+            StringBuilder secretRecipe = new StringBuilder();
 
             System.out.println("--- Ingredient List ---");
             while (scanner.hasNextLine()) {
                 line = scanner.nextLine();
                 decodedAmount = decodeIngredient(line).getAmount();
                 decodedIngredient = decodeIngredient(line).getDescription();
-                System.out.println(decodedAmount + " of " + decodedIngredient);
+
+                secretRecipe.append(decodedAmount + " of " + decodedIngredient + "\n");
+
+                //System.out.println(decodedAmount + " of " + decodedIngredient);
             }
+            System.out.println(secretRecipe);
+
+            try {
+                Path path = Paths.get("C:\\Users\\bmxca\\GitHub\\HoursWork\\src\\main\\resources\\decoded_recipe.txt");
+                Files.writeString(path, secretRecipe, StandardCharsets.UTF_8);
+            }
+            catch (IOException ex){
+                System.out.println("Invalid Write Location");
+            }
+
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
