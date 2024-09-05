@@ -80,11 +80,19 @@ public class SecretRecipeDecoder {
      * @return
      */
     public static Ingredient decodeIngredient(String line) {
-        // TODO: implement me
-        return new Ingredient("1 cup", "butter");
+        // TODO: implement reading from text line maybe? need to look at table because data has #'s in it, but focus on getting basic functionality first then iron this out
+        Ingredient x = new Ingredient("8 vgl", "hgiikf"); //use for test
+
+        String y = decodeString(x.getAmount());
+        String z = decodeString(x.getDescription());
+
+        return new Ingredient(y, z);
     }
 
     public static void main(String[] args) {
         // TODO: implement me
+        Ingredient secretrecipe = new Ingredient("8 vgl", "#hgiikf");  //use this for testing, need to implement reading this from file
+        System.out.println(decodeString("8 vgl"));
+
     }
 }
