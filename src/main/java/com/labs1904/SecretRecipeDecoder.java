@@ -1,6 +1,5 @@
 package com.labs1904;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,14 +45,33 @@ public class SecretRecipeDecoder {
         }
     };
 
+    //Best I can tell this function works is a keyvalue pair from a hashmap.
+    //So maybe the best way to implement is string->hashmap->convert->string
+
     /**
      * Given a string named str, use the Caesar encoding above to return the decoded string.
      * @param str
      * @return
      */
     public static String decodeString(String str) {
-        // TODO: implement me
-        return "1 cup";
+        String encodedString = str; //changing for readability
+        StringBuilder decodedString = new StringBuilder();
+
+        for (int i = 0; i < encodedString.length(); i++) {
+            //loop thru string, then swap for correct letter.
+            String encodedLetter = String.valueOf(encodedString.charAt(i)); //loops thru the letters in string
+            String decodedLetter = "";
+
+            if(ENCODING.containsKey(encodedLetter)){ //behavior should just pass letter along if its not in cypher
+                decodedLetter = ENCODING.get(i);
+            } else {
+                decodedLetter = encodedLetter;
+            }
+            decodedString.append(decodedLetter);
+        }
+
+        System.out.println(decodedString.toString());
+        return decodedString.toString();
     }
 
     /**
